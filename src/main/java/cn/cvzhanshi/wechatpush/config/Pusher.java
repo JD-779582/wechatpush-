@@ -67,6 +67,15 @@ public class Pusher {
         templateMessage.addData(new WxMpTemplateData("zh", map.get("zh") + "", "#C71585"));
         String beizhu1 = "小王同志";
         String beizhu2 = "小刘同志";
+        String beizhu3 = "";
+        int temp = Integer.parseInt(weather.getTemp());
+        if (5 < temp && temp < 17) {
+            beizhu3 = "今天天气有点冷记得多穿衣服哟，别着凉了！";
+        } else if (17 <= temp && temp < 25) {
+            beizhu3 = "今天天气较为凉爽，但是需要穿上外套哟！！";
+        } else {
+            beizhu3 = "今天比较炎热，要注意防晒丫！！";
+        }
 
         if (JiNianRiUtils.getLianAi() % 365 == 0) {
             beizhu2 = "今天是恋爱" + (JiNianRiUtils.getLianAi() / 365) + "周年纪念日！";
@@ -79,6 +88,7 @@ public class Pusher {
         }
         templateMessage.addData(new WxMpTemplateData("beizhu2", beizhu2, "#C71585"));
         templateMessage.addData(new WxMpTemplateData("beizhu1", beizhu1, "#C71585"));
+        templateMessage.addData(new WxMpTemplateData("beizhu3", beizhu3, "#ff0000"));
         try {
             wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
         } catch (Exception e) {
