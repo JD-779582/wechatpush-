@@ -25,9 +25,24 @@ public class WeatherUtils {
         map1.put("district_id","650103"); // 乌鲁木齐沙依巴克区行政代码
         map1.put("data_type","all");//这个是数据类型
         map1.put("ak","QcW0d7EINrnvlSIgmyFDbYNaW20I5a79");
+        Weather weather = getWeather(restTemplate, map1);
+        return weather;
+    }
+
+    public static Weather getWeather(String districtId, String ak){
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String,String> map1 = new HashMap<String,String>();
+        map1.put("district_id", districtId); // 乌鲁木齐沙依巴克区行政代码
+        map1.put("data_type","all");//这个是数据类型
+        map1.put("ak", ak);
+        Weather weather = getWeather(restTemplate, map1);
+        return weather;
+    }
+
+    private static Weather getWeather(RestTemplate restTemplate, Map<String, String> map1) {
         String res = restTemplate.getForObject(
                 "https://api.map.baidu.com/weather/v1/?district_id={district_id}&data_type={data_type}&ak={ak}",
-                String.class,map1);
+                String.class, map1);
         JSONObject json = JSONObject.parseObject(res);
         JSONArray forecasts = json.getJSONObject("result").getJSONArray("forecasts");
         JSONObject location = json.getJSONObject("result").getJSONObject("location");

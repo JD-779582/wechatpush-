@@ -34,8 +34,8 @@ public class Pusher {
         wxMpService.setWxMpConfigStorage(wxStorage);
         //2,推送消息
         WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
-                .toUser("oUydF6HC3LAMhFO4R5rBmnNnZXvY")
-                .templateId("to79e0jzGZUTleLxCMlPRCvsDz7W4UhKg4jhRoa87sU")
+//                .toUser("oUydF6HC3LAMhFO4R5rBmnNnZXvY")
+                .toUser("oUydF6Ad_V7EZmh10HMMf-LQt190")
                 .build();
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (hour < 9) {
@@ -45,6 +45,7 @@ public class Pusher {
         }
         //3,如果是正式版发送模版消息，这里需要配置你的信息
         Weather weather = WeatherUtils.getWeather();
+        Weather weather1 = WeatherUtils.getWeather("652301", "QcW0d7EINrnvlSIgmyFDbYNaW20I5a79");
 
         Map<String, String> map = CaiHongPiUtils.getEnsentence();
         templateMessage.addData(new WxMpTemplateData("riqi", weather.getDate() + "  " + weather.getWeek(), "#00BFFF"));
@@ -58,6 +59,16 @@ public class Pusher {
         templateMessage.addData(new WxMpTemplateData("city", weather.getCity() + "", "#B95EA3"));
         templateMessage.addData(new WxMpTemplateData("name", weather.getName() + "", "#B95EA3"));
 
+
+        templateMessage.addData(new WxMpTemplateData("tianqi1",weather1.getText_now(),"#00FFFF"));
+        templateMessage.addData(new WxMpTemplateData("feels_like1",weather1.getFeels_like(),"#00FFFF"));
+        templateMessage.addData(new WxMpTemplateData("low1",weather1.getLow() + "","#173177"));
+        templateMessage.addData(new WxMpTemplateData("temp1",weather1.getTemp() + "","#EE212D"));
+        templateMessage.addData(new WxMpTemplateData("high1",weather1.getHigh()+ "","#FF6347" ));
+        templateMessage.addData(new WxMpTemplateData("windclass1",weather1.getWind_class()+ "","#42B857" ));
+        templateMessage.addData(new WxMpTemplateData("winddir1",weather1.getWind_dir()+ "","#B95EA3" ));
+        templateMessage.addData(new WxMpTemplateData("city1",weather1.getCity() + "","#B95EA3" ));
+        templateMessage.addData(new WxMpTemplateData("name1",weather1.getName() + "","#B95EA3" ));
 
         templateMessage.addData(new WxMpTemplateData("caihongpi", CaiHongPiUtils.getCaiHongPi(), "#FF69B4"));
         templateMessage.addData(new WxMpTemplateData("lianai", JiNianRiUtils.getLianAi() + "", "#FF1493"));
